@@ -1,11 +1,8 @@
 import { Configuration } from "webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 const webpack = require('webpack');
-
-console.log('NODE_ENV', process.env.NODE_ENV)
-console.log('BASE_ENV', process.env.BASE_ENV)
-
 const path = require("path");
+
 
 const baseConfig: Configuration = {
     entry: path.join(__dirname, "../src/index.tsx"), // 入口文件
@@ -17,8 +14,49 @@ const baseConfig: Configuration = {
                 use: "babel-loader",
             },
             {
-                test: /.css$/, //匹配 css 文件
-                use: ["style-loader", "css-loader"],
+                test: /\.css$/, //匹配 css 文件
+                exclude: /node_modules/,
+                use: [
+                    "style-loader",
+                    {
+                        loader: "css-loader",
+                        options: {
+                            modules: {
+                                mode: 'global',
+                            },
+                        },
+                    },
+                    'postcss-loader'
+                ],
+            },
+            {
+                test: /\.less$/,
+                exclude: /node_modules/,
+                use: [
+                    "style-loader",
+                    {
+                        loader: "css-loader",
+                        options: {
+                            modules: {
+                                importLoaders: 1,
+                                modules: true,
+                                // localIdentName: '[path][name]__[local]__[hash:base64:5]'
+                                localIdentName: '[local]__[hash:base64:5]'
+                            },
+                        },
+                    },
+                    'postcss-loader',
+                    {
+                        loader: "less-loader",
+                        options: {
+                            lessOptions: {
+                                // 如果要在less中写类型js的语法，需要加这一个配置
+                                javascriptEnabled: true
+                            },
+                        },
+
+                    },
+                ],
             },
         ],
     },

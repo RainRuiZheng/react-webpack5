@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "experimentalDecorators": true,
+    "resolveJsonModule": true,
     "jsx": "react-jsx",
     /* Visit https://aka.ms/tsconfig.json to read more about this file */
 

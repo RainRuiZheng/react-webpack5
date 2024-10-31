@@ -2,8 +2,10 @@ import path from "path";
 import { merge } from "webpack-merge";
 import webpack, { Configuration as WebpackConfiguration } from "webpack";
 import WebpackDevServer from "webpack-dev-server";
+import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
 import { Configuration as WebpackDevServerConfiguration } from "webpack-dev-server";
 import baseConfig from "./webpack.base";
+// import WebpackBar from 'webpackbar';
 
 // 运行命令的时候重启一次打开一个tab 页很烦，所以呢优化一下
 // 参考：create-react-app 的启动方式
@@ -28,6 +30,14 @@ const devConfig: Configuration = merge(baseConfig, {
       - 我们希望能够找到源代码的错误,而不是打包后的,所以需要加上 module
      */
     devtool: "eval-cheap-module-source-map",
+    plugins: [
+        new ReactRefreshWebpackPlugin(), // 添加热更新插件
+        // new WebpackBar({
+        //     color: "#85d",  // 默认green，进度条颜色支持HEX
+        //     basic: false,   // 默认true，启用一个简单的日志报告器
+        //     profile: false,  // 默认false，启用探查器。
+        // }),
+    ],
 });
 
 const devServer = new WebpackDevServer(

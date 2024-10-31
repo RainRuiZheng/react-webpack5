@@ -6,6 +6,9 @@ const path = require("path");
 
 const baseConfig: Configuration = {
     entry: path.join(__dirname, "../src/index.tsx"), // 入口文件
+    // cache: {
+    //     type: 'filesystem', // 使用文件缓存
+    // },
     // loader 配置
     module: {
         rules: [
@@ -38,8 +41,8 @@ const baseConfig: Configuration = {
                         loader: "css-loader",
                         options: {
                             modules: {
-                                importLoaders: 1,
-                                modules: true,
+                                // importLoaders: 1,
+                                // modules: true,
                                 // localIdentName: '[path][name]__[local]__[hash:base64:5]'
                                 localIdentName: '[local]__[hash:base64:5]'
                             },
@@ -57,6 +60,27 @@ const baseConfig: Configuration = {
 
                     },
                 ],
+            },
+            {
+                test: /\.(png|jpe?g|gif|svg)$/i, // 匹配图片文件
+                type: "asset", // type选择asset
+                parser: {
+                    dataUrlCondition: {
+                        maxSize: 9 * 1024, // 小于10kb转base64
+                    }
+                },
+                generator: {
+                    filename: 'static/images/[hash][ext][query]', // 文件输出目录和命名
+                },
+            },
+            {
+                // 匹配json文件
+                test: /\.json$/,
+                type: "asset/resource", // 将json文件视为文件类型
+                generator: {
+                    // 这里专门针对json文件的处理
+                    filename: "static/json/[name].[hash][ext][query]",
+                },
             },
         ],
     },

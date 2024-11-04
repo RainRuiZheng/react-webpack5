@@ -8,6 +8,19 @@ const LazyDemo = lazy(() => import('@/components/LazyDemo')) // 使用import语�
 // import memberList from '@/json/test.json';
 // import ClassComponent from '@/components/ClassComponent'
 
+// prefetch
+const PreFetchDemo = lazy(() => import(
+  /* webpackChunkName: "PreFetchDemo" */
+  /*webpackPrefetch: true*/
+  '@/components/PreFetchDemo'
+))
+
+// preload
+const PreloadDemo = lazy(() => import(
+  /* webpackChunkName: "PreloadDemo" */
+  /*webpackPreload: true*/
+  '@/components/PreloadDemo'
+ ))
 
 function App() {
   // console.log(memberList,1)
@@ -23,9 +36,16 @@ function App() {
   }
   return <div>
     <h2>webpack5-react-ts</h2>
-     <h2 onClick={handleOnClick}>展示</h2>
+    <h2 onClick={handleOnClick}>展示</h2>
+    { show && (
+        <>
+          <Suspense fallback={null}><PreloadDemo /></Suspense>
+          <Suspense fallback={null}><PreFetchDemo /></Suspense>
+        </>
+      ) }
+
       {/* show为true时加载LazyDemo组件 */}
-      { show && <Suspense fallback={null}><LazyDemo /></Suspense> }
+      {/* { show && <Suspense fallback={null}><LazyDemo /></Suspense> } */}
     {/* <div className={lessStyles.lessBox}>
       <div className={lessStyles["box"]}> lessBox1</div>
       <img src={smallImg} alt="小于9kb的图片" />

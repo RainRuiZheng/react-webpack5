@@ -7,8 +7,9 @@ import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import CompressionPlugin from 'compression-webpack-plugin';
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const globAll = require('glob-all')
-const { PurgeCSSPlugin } = require('purgecss-webpack-plugin')
+// const globAll = require('glob-all')
+const { PurgeCSSPlugin } = require('purgecss-webpack-plugin');
+const glob = require('glob')
 
 const prodConfig: Configuration = merge(baseConfig, {
     mode: "production", // 生产模式,会开启tree-shaking和压缩代码,以及其他优化
@@ -36,12 +37,15 @@ const prodConfig: Configuration = merge(baseConfig, {
         // 清理无用css，检测src下所有tsx文件和public下index.html中使用的类名和id和标签名称
         // 只打包这些文件中用到的样式
         new PurgeCSSPlugin({
-            paths: globAll.sync(
-                [`${path.join(__dirname, '../src')}/**/*`, path.join(__dirname, '../public/index.html')],
-                {
-                    nodir: true
-                }
-            ),
+            // paths: globAll.sync(
+            //     [`${path.join(__dirname, '../src')}/**/*`, path.join(__dirname, '../public/index.html')],
+            //     {
+            //         nodir: true
+            //     }
+            // ),
+            paths: glob.sync(`${path.join(__dirname, '../src')}/**/*`, {
+                nodir: true
+            }),
             // 用 only 来指定 purgecss-webpack-plugin 的入口
             // https://github.com/FullHuman/purgecss/tree/main/packages/purgecss-webpack-plugin
             only: ["dist"],
@@ -51,7 +55,7 @@ const prodConfig: Configuration = merge(baseConfig, {
         }),
         // 打包时生成gzip文件
         new CompressionPlugin({
-            test: /\.(js|css)$/, // 只生成css,js压缩文件
+            test: /.(js|css)$/, // 只生成css,js压缩文件
             filename: '[path][base].gz', // 文件命名
             algorithm: 'gzip', // 压缩格式,默认是gzip
             threshold: 10240, // 只有大小大于该值的资源会被处理。默认值是 10k

@@ -15,7 +15,9 @@
     "build:analy": "cross-env NODE_ENV=production BASE_ENV=production webpack -c build/webpack.analy.ts",
     "lint:prettier": "prettier --write --loglevel warn \"src/**/*.{js,ts,json,tsx,css,less,scss,stylus,html,md}\"",
     "lint:eslint": "eslint --fix --ext .js,.ts,.tsx ./src",
-    "pre-check": "tsc && npx lint-staged"
+    "pre-check": "tsc && npx lint-staged",
+    "commit": "git pull && git add -A && git-cz && git push",
+    "release": "standard-version"
   },
   "config": {
     "commitizen": {
@@ -41,8 +43,9 @@
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-react": "^7.25.9",
     "@babel/preset-typescript": "^7.26.0",
-    "@commitlint/cli": "^19.5.0",
-    "@commitlint/config-conventional": "^19.5.0",
+    "@commitlint/cli": "^17.4.4",
+    "@commitlint/config-conventional": "^17.4.4",
+    "standard-version": "^9.5.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.15",
     "@types/node": "^22.8.2",
     "@types/react": "^18.3.12",

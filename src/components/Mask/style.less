@@ -5,7 +5,7 @@
   z-index: 999;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, .6);
+  background: rgba(0, 0, 0, 0.6);
 
   &_default_popup {
     position: fixed;
@@ -16,7 +16,7 @@
   &_show {
     .effect(@keyframes) {
       animation-duration: 0.2s; // animation-timing-function: cubic-bezier(.55, 0, .55, .2);
-      animation: @keyframes .3s 1 linear;
+      animation: @keyframes 0.3s 1 linear;
       animation-name: @keyframes;
       animation-fill-mode: both;
     }
@@ -30,7 +30,6 @@
     } // paused
   }
 }
-
 
 @keyframes amFadeIn {
   0% {

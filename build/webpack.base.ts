@@ -88,7 +88,9 @@ const baseConfig: Configuration = {
     plugins: [
         new HtmlWebpackPlugin({
             // 复制 'index.html' 文件，并自动引入打包输出的所有资源（js/css）
-            template: path.join(__dirname, "../public/index.html"),
+          template: path.join(__dirname, "../public/index.html"),
+          favicon: path.join(__dirname, "../public/favico.png"),
+          title:'测试标题',
             // 压缩html资源
             minify: {
                 collapseWhitespace: true, //去空格

@@ -9,6 +9,9 @@ declare module 'process' {
   }
 }
 
+declare module 'dva-core';
+declare module '*.js';
+
 /* CSS MODULES */
 declare module '*.css' {
   const content: any
@@ -19,8 +22,6 @@ declare module '*.less' {
   const content: any
   export default content
 }
-
-declare module '*.js'
 
 /* IMAGES */
 declare module '*.svg' {
